@@ -27,6 +27,7 @@ from pydantic_ai import Agent, ModelRetry, RunContext
 load_dotenv()
 llm = os.getenv('LLM_MODEL', 'gpt-4o')
 
+# for ollama models
 client = AsyncOpenAI(
     base_url = 'http://localhost:11434/v1',
     api_key='ollama'
@@ -47,7 +48,7 @@ class ResearchOutputParser(BaseModel):
     key_findings: list[str] = Field(..., description="A bullet-point list of the most important findings from the search.")
     summary: str = Field(..., description="A concise, well-written summary answering the query.")
     sources: list[str] = Field(..., description="List of reliable source URLs used for the answer.")
-    confidence: float = Field(..., description="Confidence score (0 to 1) on how well the answer addresses the query.")
+    confidence: float = Field(..., description="Confidence score in % on how well the answer addresses the query.")
 
 
 @dataclass
