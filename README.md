@@ -1,5 +1,6 @@
-## 🔍 Pydantic AI Web Search Agent
 
+# 🔍 Pydantic AI Web Search Agent
+---
 AI-powered web search with a beautiful Rich-based CLI. Ask a question, fetch results from the Brave Search API, and get concise AI analysis in seconds.
 
 ### ✨ Features
