@@ -48,7 +48,7 @@ class ResearchOutputParser(BaseModel):
     key_findings: list[str] = Field(..., description="A bullet-point list of the most important findings from the search.")
     summary: str = Field(..., description="A concise, well-written summary answering the query.")
     sources: list[str] = Field(..., description="List of reliable source URLs used for the answer.")
-    confidence: float = Field(..., description="Confidence score in % on how well the answer addresses the query.")
+    confidence: float = Field(..., description="Confidence score in (0, 1) on how well the answer addresses the query.")
 
 
 @dataclass
