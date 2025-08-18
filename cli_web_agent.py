@@ -20,6 +20,7 @@ from rich.text import Text
 from rich.markdown import Markdown
 
 from openai import AsyncOpenAI
+from pydantic import BaseModel, Field
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai import Agent, ModelRetry, RunContext
 
@@ -39,6 +40,14 @@ logfire.configure(send_to_logfire='if-token-present')
 # Initialize Rich console
 console = Console()
 app = typer.Typer(help="🔍 AI-powered web search agent with Rich CLI interface")
+
+
+class ResearchOutputParser(BaseModel):
+    query: str = Field(..., description="The original research query or question.")
+    key_findings: list[str] = Field(..., description="A bullet-point list of the most important findings from the search.")
+    summary: str = Field(..., description="A concise, well-written summary answering the query.")
+    sources: list[str] = Field(..., description="List of reliable source URLs used for the answer.")
+    confidence: float = Field(..., description="Confidence score (0 to 1) on how well the answer addresses the query.")
 
 
 @dataclass
@@ -79,7 +88,8 @@ web_search_agent = Agent(
     model,
     system_prompt=f'You are an expert at researching the web to answer user questions. The current date is: {datetime.now().strftime("%Y-%m-%d")}',
     deps_type=Deps,
-    retries=2
+    retries=2,
+    output_type=ResearchOutputParser
 )
 
 
@@ -187,6 +197,57 @@ def display_search_results(raw_results: str, ai_response: str):
         border_style="green"
     ))
 
+def display_research_results(result: ResearchOutputParser):
+    """Display structured research results with Rich formatting."""
+    
+    # Display query
+    console.print("\n")
+    console.print(Panel(
+        f"🔍 [bold]{result.query}[/bold]",
+        title="[bold blue]Research Query[/bold blue]",
+        border_style="blue"
+    ))
+    
+    # Display key findings as a table
+    if result.key_findings:
+        findings_table = Table(title="🔑 Key Findings", show_header=False, box=None)
+        findings_table.add_column("", style="cyan", no_wrap=False)
+        
+        for i, finding in enumerate(result.key_findings, 1):
+            findings_table.add_row(f"• {finding}")
+        
+        console.print(findings_table)
+        console.print()
+    
+    # Display summary
+    console.print(Panel(
+        Markdown(f"## Summary\n\n{result.summary}"),
+        title="[bold green]AI Analysis Summary[/bold green]",
+        border_style="green"
+    ))
+    
+    # Display sources
+    if result.sources:
+        sources_table = Table(title="📚 Sources", show_header=False, box=None)
+        sources_table.add_column("", style="blue", no_wrap=False)
+        
+        for i, source in enumerate(result.sources, 1):
+            sources_table.add_row(f"{i}. [link={source}]{source}[/link]")
+        
+        console.print(sources_table)
+        console.print()
+    
+    # Display confidence score
+    confidence_color = "green" if result.confidence >= 0.8 else "yellow" if result.confidence >= 0.6 else "red"
+    confidence_text = f"[{confidence_color}]{result.confidence:.1%}[/{confidence_color}]"
+    
+    console.print(Panel(
+        f"🎯 Confidence Score: {confidence_text}",
+        title="[bold magenta]Analysis Confidence[/bold magenta]",
+        border_style="magenta"
+    ))
+
+
 def display_session_costs():
     """Display session token costs."""
     if session_costs.total_cost > 0:
@@ -250,14 +311,10 @@ def search(
     
     async def run_search(search_query: str):
         try:
-            ai_response, _ = await search_and_analyze(search_query)
+            result_output, _ = await search_and_analyze(search_query)
             
-            console.print("\n")
-            console.print(Panel(
-                Markdown(f"## 🤖 AI Analysis\n\n{ai_response}"),
-                title="[bold green]Search Results & Analysis[/bold green]",
-                border_style="green"
-            ))
+            # Format the structured ResearchOutputParser output
+            display_research_results(result_output)
             
         except Exception as e:
             console.print(Panel(
