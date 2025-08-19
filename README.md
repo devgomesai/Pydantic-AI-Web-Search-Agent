@@ -57,6 +57,11 @@ LLM_MODEL=gpt-4o
 
 # Only needed if using OpenAI-hosted GPT models
 OPENAI_API_KEY=sk-...
+
+# Google Models https://ai.google.dev/gemini-api/docs/models
+LLM_MODEL=gemini-2.5-pro
+# Google api-key https://ai.google.dev/gemini-api/docs/api-key
+GOOGLE_API_KEY=AIxx
 ```
 
 Notes:
@@ -69,25 +74,41 @@ Notes:
 #### Single search
 
 ```bash
-python cli_web_agent.py search "your query here"
+OpenAI:
+python cli_web_agent.py search " Query "
+
+Google:
+uv run .\cli_web_agent_g.py search " Query "
 ```
 
 #### Interactive mode
 
 ```bash
+OpenAI:
 python cli_web_agent.py search --interactive
+
+Google:
+uv run .\cli_web_agent_g.py search --interactive
 ```
 
 #### Check configuration
 
 ```bash
+OpenAI:
 python cli_web_agent.py config
+
+Google:
+uv run .\cli_web_agent_g.py config
 ```
 
 #### Help
 
 ```bash
+OpenAI:
 python cli_web_agent.py --help
+
+Google:
+uv run .\cli_web_agent_g.py --help
 ```
 
 ### 🖥 What you’ll see
