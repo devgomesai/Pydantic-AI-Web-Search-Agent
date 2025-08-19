@@ -7,7 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "devtools>=0.12.2",
     "logfire>=4.3.3",
-    "pydantic-ai-slim[anthropic,openai]>=0.7.2",
+    "pydantic-ai-slim[anthropic,google,openai]>=0.7.2",
     "python-dotenv>=1.1.1",
     "rich>=13.7.0",
     "typer>=0.12.0",

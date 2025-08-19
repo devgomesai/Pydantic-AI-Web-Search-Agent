@@ -21,11 +21,13 @@ from rich.markdown import Markdown
 
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
-from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.models.google import GoogleModel, GoogleModelSettings
+from pydantic_ai.providers.google import GoogleProvider
 from pydantic_ai import Agent, ModelRetry, RunContext
 
 load_dotenv()
 llm = os.getenv('LLM_MODEL', 'gpt-4o')
+gemini_api_key = os.getenv('GOOGLE_API_KEY', '')
 
 # for ollama models
 client = AsyncOpenAI(
@@ -33,7 +35,10 @@ client = AsyncOpenAI(
     api_key='ollama'
 )
 
-model = OpenAIModel(llm) if llm.lower().startswith("gpt") else OpenAIModel(llm, openai_client=client)
+# LLM
+provider = GoogleProvider(api_key=gemini_api_key)
+settings = GoogleModelSettings(google_thinking_config={'include_thoughts': True})
+model = GoogleModel(llm, provider=provider)
 
 
 # 'if-token-present' means nothing will be sent (and the example will work) if you don't have logfire configured
@@ -91,7 +96,8 @@ web_search_agent = Agent(
     system_prompt=f'You are an expert at researching the web to answer user questions. The current date is: {datetime.now().strftime("%Y-%m-%d")}',
     deps_type=Deps,
     retries=2,
-    output_type=ResearchOutputParser
+    output_type=ResearchOutputParser,
+    model_settings=settings
 )
 
 
