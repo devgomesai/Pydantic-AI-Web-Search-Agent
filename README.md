@@ -1,118 +1,292 @@
+# 🤖 Web Agent - AI-Powered Web Search Tool
 
-# 🔍 Pydantic AI Web Search Agent
+**An intelligent web search agent that combines web search with AI analysis to provide comprehensive, well-researched answers to your questions.**
+
+Web Agent supports multiple AI providers (OpenAI, Google AI, and local models via Ollama) and delivers results through a beautiful, rich CLI interface.
+
 ---
-AI-powered web search with a beautiful Rich-based CLI. Ask a question, fetch results from the Brave Search API, and get concise AI analysis in seconds.
 
-### ✨ Features
+## ✨ Features
 
-- **Rich CLI UI**: Welcome panel, progress spinners, and formatted output
-- **Structured results**: Clean table of sources with titles and summaries
-- **AI analysis**: Clear, readable response panel
-- **Interactive mode**: Run repeated searches in a session
-- **Config view**: Quickly inspect environment and model settings
+- **🔍 Intelligent Web Search**: Uses Brave Search API to find relevant information
+- **🤖 Multi-Model AI Analysis**: Supports OpenAI GPT models, Google Gemini models, and local Ollama models
+- **📊 Rich CLI Interface**: Beautiful formatted output with tables, panels, and progress indicators
+- **💰 Cost Tracking**: Real-time token usage and cost estimation
+- **⚡ Interactive Mode**: Continuous search sessions with follow-up questions
+- **🔧 Easy Configuration**: Simple environment variable setup
 
-### 📦 Requirements
+---
 
-- Python 3.13+
-- A Brave Search API key (for real web results). Without it, the app returns a test stub.
-- An LLM available via:
-  - OpenAI API (set `LLM_MODEL` to a GPT model and provide `OPENAI_API_KEY`), or
-  - A local server compatible with the OpenAI API, e.g. Ollama at `http://localhost:11434/v1` (set `LLM_MODEL` to your local model name; API key is not used).
+## 🚀 Quick Start
 
-### 🚀 Quickstart
-
-#### Option A: Using uv (recommended)
+### 1. Installation
 
 ```bash
-# Install uv if needed: https://docs.astral.sh/uv/getting-started/installation/
-uv sync
-uv run python cli_web_agent.py --help
-```
+# Clone or download the repository
+git clone <your-repo-url>
+cd Pydantic-AI-Agents
 
-#### Option B: Using pip
-
-```bash
-python -m venv .venv
-. .venv/Scripts/activate  # Windows PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install -U pip
+# Install the package
 pip install -e .
-# If httpx was not installed transitively, also run:
-pip install httpx
-python cli_web_agent.py --help
+
+# Or install directly from wheel (if you have the built package)
+pip install web-agent-0.1.0-py3-none-any.whl
 ```
 
-### 🔧 Configuration
+### 2. Configuration
 
-Create a `.env` file in the project root:
+Create a `.env` file in your project directory:
 
-```dotenv
-# Required for real search results
+```env
+# Required: Brave Search API Key (get from https://api-dashboard.search.brave.com/)
 BRAVE_API_KEY=your_brave_api_key_here
 
-# Choose your model
-# Examples:
-#   OpenAI: gpt-4o, gpt-4o-mini
-#   Local (Ollama): llama3.1, qwen2.5, mistral
-LLM_MODEL=gpt-4o
+# Choose your AI model
+LLM_MODEL=gpt-4o-mini  # or gemini-1.5-flash, or any local model name
 
-# Only needed if using OpenAI-hosted GPT models
-OPENAI_API_KEY=sk-...
+# Required for OpenAI models (if using gpt-* models)
+OPENAI_API_KEY=sk-your-openai-api-key-here
+
+# Required for Google AI models (if using gemini-* models)  
+GOOGLE_API_KEY=your-google-api-key-here
 ```
 
-Notes:
-
-- When `LLM_MODEL` starts with `gpt`, the app uses OpenAI’s API. Otherwise it talks to `http://localhost:11434/v1` (Ollama-style server) with key `ollama`.
-- If `BRAVE_API_KEY` is missing, the agent still runs but returns a test message instead of live results.
-
-### 🧠 Usage
-
-#### Single search
+### 3. Usage
 
 ```bash
-python cli_web_agent.py search "your query here"
+# Check your configuration
+web-agent config
+
+# Search for information
+web-agent search "What are the latest developments in AI?"
+
+# Interactive mode for multiple searches
+web-agent search --interactive
+
+# Get help
+web-agent --help
 ```
 
-#### Interactive mode
+---
+
+## 📋 Requirements
+
+- **Python**: 3.9 or higher
+- **Brave Search API Key**: Required for web search functionality
+- **AI Provider API Key**: At least one of:
+  - OpenAI API key (for GPT models)
+  - Google API key (for Gemini models)
+  - Local Ollama installation (for local models)
+
+---
+
+## 🔧 Detailed Configuration
+
+### Environment Variables
+
+| Variable           | Required    | Description                           | Example                               |
+| ------------------ | ----------- | ------------------------------------- | ------------------------------------- |
+| `BRAVE_API_KEY`  | Yes         | Brave Search API key for web search   | `BSA3FAEGu3zgxQly8mLX...`           |
+| `LLM_MODEL`      | No          | AI model to use (default: gpt-4o)     | `gpt-4o-mini`, `gemini-1.5-flash` |
+| `OPENAI_API_KEY` | Conditional | Required for OpenAI models (gpt-*)    | `sk-proj-abc123...`                 |
+| `GOOGLE_API_KEY` | Conditional | Required for Google models (gemini-*) | `AIzaSyDrAP-olPI...`                |
+
+### Supported Models
+
+#### OpenAI Models
+
+- `gpt-4o` - Latest GPT-4 Omni model
+- `gpt-4o-mini` - Cost-effective GPT-4 Omni model
+- `gpt-4` - GPT-4 model
+- `gpt-3.5-turbo` - GPT-3.5 Turbo model
+
+#### Google AI Models
+
+- `gemini-1.5-pro` - Advanced Gemini model
+- `gemini-1.5-flash` - Fast Gemini model
+- `gemini-2.0-flash-exp` - Experimental Gemini model
+- `gemini-2.5-pro` - Latest Gemini model
+
+#### Local Models (Ollama)
+
+Any model available through Ollama can be used by setting `LLM_MODEL` to the model name:
+
+- `llama3.1` - Meta's Llama model
+- `mistral` - Mistral AI model
+- `qwen2.5` - Alibaba's Qwen model
+- And many others...
+
+---
+
+## 📖 Usage Examples
+
+### Basic Search
 
 ```bash
-python cli_web_agent.py search --interactive
+web-agent search "What is quantum computing?"
 ```
 
-#### Check configuration
+### Interactive Mode
 
 ```bash
-python cli_web_agent.py config
+web-agent search --interactive
+# Follow the prompts to ask multiple questions in one session
 ```
 
-#### Help
+### Configuration Check
 
 ```bash
-python cli_web_agent.py --help
+web-agent config
 ```
 
-### 🖥 What you’ll see
+This displays:
 
-- A welcome panel introducing the tool
-- A progress spinner during the search and analysis
-- A table of sources (title + short summary with links)
-- A separate panel with the AI’s analysis
+- Current model configuration
+- API key status (configured/not configured)
+- Supported model formats
 
-### 🧩 How it works (high level)
+---
 
-- Uses `Brave Search API` to fetch web results
-- Passes your query to a `pydantic-ai` agent
-- Renders results and analysis using `rich`
-- CLI powered by `typer`
+## 🎯 How It Works
 
-### 🛠 Troubleshooting
+1. **Query Processing**: Your question is processed by the AI agent
+2. **Web Search**: Multiple targeted web searches are performed using Brave Search API
+3. **Content Analysis**: AI analyzes and synthesizes information from search results
+4. **Structured Response**: Results are formatted into:
+   - Key findings (bullet points)
+   - Comprehensive summary
+   - Source URLs
+   - Confidence score
+   - Token usage and cost information
 
-- **No real results, only a test message**: Set `BRAVE_API_KEY` in `.env`.
-- **Using a local model (Ollama)**: Ensure `ollama serve` is running and the model is pulled (e.g., `ollama pull llama3.1`). Set `LLM_MODEL` to the local model name.
-- **Python version error**: This project targets Python 3.13+. If needed, create a 3.13 environment.
-- **Missing dependency `httpx`**: Install it with `pip install httpx` (some environments may not pull it transitively).
+---
 
-### 🙌 Acknowledgments
+## 📊 Output Format
+
+The tool provides structured output including:
+
+- **Research Query**: Your original question
+- **Key Findings**: Important bullet points discovered
+- **AI Analysis Summary**: Comprehensive answer to your question
+- **Sources**: List of URLs used for research
+- **Confidence Score**: AI's confidence in the answer (0-100%)
+- **Token Usage**: Input/output tokens used and estimated cost
+
+---
+
+## 🛠️ Development Setup
+
+### Local Development
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd Pydantic-AI-Agents
+
+# Install in development mode
+pip install -e .
+
+# Run tests (if available)
+python -m pytest
+
+# Build the package
+python -m build
+```
+
+### Building Distribution
+
+```bash
+# Install build tools
+pip install build
+
+# Build wheel and source distribution
+python -m build
+
+# Files will be created in dist/
+# - web_agent-0.1.0-py3-none-any.whl
+# - web_agent-0.1.0.tar.gz
+```
+
+---
+
+## 🔒 API Keys Setup
+
+### Brave Search API
+
+1. Visit [Brave Search API Dashboard](https://api-dashboard.search.brave.com/)
+2. Sign up/login and create a new API key
+3. Add to your `.env` file as `BRAVE_API_KEY`
+
+### OpenAI API
+
+1. Visit [OpenAI API Platform](https://platform.openai.com/api-keys)
+2. Create a new API key
+3. Add to your `.env` file as `OPENAI_API_KEY`
+
+### Google AI API
+
+1. Visit [Google AI Studio](https://aistudio.google.com/apikey)
+2. Create a new API key
+3. Add to your `.env` file as `GOOGLE_API_KEY`
+
+### Ollama (Local Models)
+
+1. Install [Ollama](https://ollama.ai/)
+2. Start Ollama: `ollama serve`
+3. Pull a model: `ollama pull llama3.1`
+4. Set `LLM_MODEL` to your model name
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**"No module named 'web_agent'"**
+
+- Ensure you've installed the package: `pip install -e .`
+- Check you're in the correct directory
+
+**"BRAVE_API_KEY not configured"**
+
+- Create a `.env` file with your Brave Search API key
+- Ensure the `.env` file is in the same directory as your script
+
+**"500 INTERNAL error from Google API"**
+
+- Google AI API occasionally has internal errors
+- Try switching to a different model temporarily
+- Wait a few minutes and try again
+
+**Unicode encoding errors on Windows**
+
+- This should be fixed in the current version
+- Try running in Windows Terminal or VS Code terminal
+
+**"No real search results"**
+
+- Verify your `BRAVE_API_KEY` is correct
+- Check your internet connection
+- The tool will work with test data if API key is missing
+
+---
+
+## 📄 License
+
+This project is open source. Please check the license file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+---
+
+## 🙏 Acknowledgments
 
 - [PydanticAI](https://github.com/pydantic/pydantic-ai) for the agent framework
-- [Typer](https://github.com/tiangolo/typer) and [Rich](https://github.com/Textualize/rich) for the CLI/UX
-- [Brave Search API](https://brave.com/search/api/) for web results
+- [Typer](https://github.com/tiangolo/typer) for the CLI framework
+- [Rich](https://github.com/Textualize/rich) for beautiful terminal output
+- [Brave Search API](https://brave.com/search/api/) for web search capabilities
+- [OpenAI](https://openai.com/) and [Google AI](https://ai.google.dev/) for AI models
