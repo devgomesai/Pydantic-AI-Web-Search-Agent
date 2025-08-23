@@ -23,7 +23,6 @@ Web Agent supports multiple AI providers (OpenAI, Google AI, and local models vi
 
 ```bash
 # Clone or download the repository
-git clone <your-repo-url>
 cd Pydantic-AI-Agents
 
 # Install the package
