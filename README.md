@@ -16,74 +16,6 @@ Web Agent supports multiple AI providers (OpenAI, Google AI, and local models vi
 - **🔧 Easy Configuration**: Simple environment variable setup
 
 ---
-
-## 🚀 Quick Start
-
-### 1. Installation
-
-```bash
-# Clone or download the repository
-cd Pydantic-AI-Agents
-
-# Install the package
-pip install -e .
-
-# Or install directly from wheel (if you have the built package)
-pip install web-agent-0.1.0-py3-none-any.whl
-```
-
-### 2. Configuration
-
-Create a `.env` file in your project directory:
-
-```env
-# Required: Brave Search API Key (get from https://api-dashboard.search.brave.com/)
-BRAVE_API_KEY=your_brave_api_key_here
-
-# Choose your AI model
-LLM_MODEL=gpt-4o-mini  # or gemini-1.5-flash, or any local model name
-
-<<<<<<< HEAD
-# Required for OpenAI models (if using gpt-* models)
-OPENAI_API_KEY=sk-your-openai-api-key-here
-
-# Required for Google AI models (if using gemini-* models)  
-GOOGLE_API_KEY=your-google-api-key-here
-=======
-# Only needed if using OpenAI-hosted GPT models
-OPENAI_API_KEY=sk-...
-
-# Google Models https://ai.google.dev/gemini-api/docs/models
-LLM_MODEL=gemini-2.5-pro
-# Google api-key https://ai.google.dev/gemini-api/docs/api-key
-GOOGLE_API_KEY=AIxx
-```
-
-### 3. Usage
-
-```bash
-# Check your configuration
-web-agent config
-
-# Search for information
-web-agent search "What are the latest developments in AI?"
-
-# Interactive mode for multiple searches
-web-agent search --interactive
-
-# Get help
-web-agent --help
-=======
-OpenAI:
-python cli_web_agent.py search " Query "
-
-Google:
-uv run .\cli_web_agent_g.py search " Query "
->>>>>>> 7a2d1bf9ad539072200ab891e238c96510ed08b3
-```
-
----
-
 ## 📋 Requirements
 
 - **Python**: 3.9 or higher
@@ -91,7 +23,6 @@ uv run .\cli_web_agent_g.py search " Query "
 - **AI Provider API Key**: At least one of:
   - OpenAI API key (for GPT models)
   - Google API key (for Gemini models)
-  - Local Ollama installation (for local models)
 
 ---
 
@@ -122,60 +53,20 @@ uv run .\cli_web_agent_g.py search " Query "
 - `gemini-2.0-flash-exp` - Experimental Gemini model
 - `gemini-2.5-pro` - Latest Gemini model
 
-#### Local Models (Ollama)
-
-Any model available through Ollama can be used by setting `LLM_MODEL` to the model name:
-
-- `llama3.1` - Meta's Llama model
-- `mistral` - Mistral AI model
-- `qwen2.5` - Alibaba's Qwen model
-- And many others...
-
 ---
 
 ## 📖 Usage Examples
 
-### Basic Search
-
-```bash
-<<<<<<< HEAD
-web-agent search "What is quantum computing?"
-=======
-OpenAI:
-python cli_web_agent.py search --interactive
-
-Google:
-uv run .\cli_web_agent_g.py search --interactive
->>>>>>> 7a2d1bf9ad539072200ab891e238c96510ed08b3
-```
-
 ### Interactive Mode
 
 ```bash
-<<<<<<< HEAD
 web-agent search --interactive
-# Follow the prompts to ask multiple questions in one session
-=======
-OpenAI:
-python cli_web_agent.py config
-
-Google:
-uv run .\cli_web_agent_g.py config
->>>>>>> 7a2d1bf9ad539072200ab891e238c96510ed08b3
 ```
 
 ### Configuration Check
 
 ```bash
-<<<<<<< HEAD
 web-agent config
-=======
-OpenAI:
-python cli_web_agent.py --help
-
-Google:
-uv run .\cli_web_agent_g.py --help
->>>>>>> 7a2d1bf9ad539072200ab891e238c96510ed08b3
 ```
 
 This displays:
