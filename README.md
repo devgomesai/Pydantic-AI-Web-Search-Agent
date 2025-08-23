@@ -57,7 +57,6 @@ OPENAI_API_KEY=sk-...
 LLM_MODEL=gemini-2.5-pro
 # Google api-key https://ai.google.dev/gemini-api/docs/api-key
 GOOGLE_API_KEY=AIxx
->>>>>>> 7a2d1bf9ad539072200ab891e238c96510ed08b3
 ```
 
 ### 3. Usage
