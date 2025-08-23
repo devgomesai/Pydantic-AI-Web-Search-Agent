@@ -62,7 +62,6 @@ GOOGLE_API_KEY=AIxx
 ### 3. Usage
 
 ```bash
-<<<<<<< HEAD
 # Check your configuration
 web-agent config
 
