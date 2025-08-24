@@ -49,10 +49,12 @@ Any one openai or gemini
 
 ## 📖 Usage Examples
 
-### Start in Interactive Mode
+### Search for Something
 
 ```bash
-web-agent search --interactive
+web-agent search 
+or 
+web-agent search "What is AI"
 ```
 
 ### Check Current Configuration
@@ -108,9 +110,6 @@ cd Pydantic-AI-Agents
 
 # Install in development mode
 pip install -e .
-
-# Run tests (if available)
-pytest
 
 # Build the package
 pip install build
