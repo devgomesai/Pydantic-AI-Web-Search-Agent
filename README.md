@@ -2,17 +2,16 @@
 
 An intelligent web search agent that combines **web search** with **AI analysis** to provide comprehensive, well-researched answers directly in your terminal.
 
-Web Agent supports multiple AI providers (OpenAI, Google AI, and local models via Ollama) and delivers results through a **beautiful, rich CLI interface**.
+Web Agent supports multiple AI providers (OpenAI, Google AI) and delivers results through a **beautiful, rich CLI interface**.
 
 ---
 
 ## ✨ Features
 
 - **🔍 Intelligent Web Search** – Uses Brave Search API to find relevant information  
-- **🤖 Multi-Model AI Analysis** – Supports OpenAI GPT models, Google Gemini models, and local Ollama models  
+- **🤖 Multi-Model AI Analysis** – Supports OpenAI GPT models, Google Gemini models
 - **📊 Rich CLI Interface** – Beautifully formatted output with tables, panels, and progress indicators  
 - **💰 Cost Tracking** – Real-time token usage and cost estimation  
-- **⚡ Interactive Mode** – Continuous search sessions with follow-up questions  
 - **🔧 Easy Configuration** – Simple environment variable setup  
 
 ---
