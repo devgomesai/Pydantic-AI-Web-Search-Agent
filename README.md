@@ -147,12 +147,6 @@ This will generate distribution files in the `dist/` directory:
 
 ---
 
-## 📄 License
-
-This project is open source. Please check the [LICENSE](./LICENSE) file for details.
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! 🎉
